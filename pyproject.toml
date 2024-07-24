@@ -19,6 +19,7 @@ langchain-core = "^0.2.23"
 python-dotenv = "^1.0.1"
 pydantic = "^2.8.2"
 pylint = "^3.2.6"
+langchainhub = "^0.1.20"
 
 [tool.poetry.dev-dependencies]
 

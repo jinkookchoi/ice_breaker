@@ -447,6 +447,19 @@ python-versions = "<4.0,>=3.8.1"
 langchain-core = ">=0.2.10,<0.3.0"
 
 [[package]]
+name = "langchainhub"
+version = "0.1.20"
+description = "The LangChain Hub API client"
+category = "main"
+optional = false
+python-versions = "<4.0,>=3.8.1"
+
+[package.dependencies]
+packaging = ">=23.2,<25"
+requests = ">=2,<3"
+types-requests = ">=2.31.0.2,<3.0.0.0"
+
+[[package]]
 name = "langsmith"
 version = "0.1.93"
 description = "Client library to connect to the LangSmith LLM Tracing and Evaluation Platform."
@@ -830,6 +843,17 @@ socks = ["requests[socks] (>=2.27.0,<3)"]
 test = ["vcrpy (>=1.10.3)"]
 
 [[package]]
+name = "types-requests"
+version = "2.32.0.20240712"
+description = "Typing stubs for requests"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
+[package.dependencies]
+urllib3 = ">=2"
+
+[[package]]
 name = "typing-extensions"
 version = "4.12.2"
 description = "Backported and Experimental Type Hints for Python 3.8+"
@@ -892,7 +916,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "742d1f22b6a6edea00e4f150b0342a62dff658ac4258599a027bc12dfbfb6fca"
+content-hash = "051b40f8ada9a4cfe41eaf49ca87d51625164fd1ffd736c715b8e302523a776e"
 
 [metadata.files]
 aiohttp = []
@@ -930,6 +954,7 @@ langchain-community = []
 langchain-core = []
 langchain-openai = []
 langchain-text-splitters = []
+langchainhub = []
 langsmith = []
 markupsafe = []
 marshmallow = []
@@ -959,6 +984,7 @@ tomli = []
 tomlkit = []
 tqdm = []
 tweepy = []
+types-requests = []
 typing-extensions = []
 typing-inspect = []
 urllib3 = []
