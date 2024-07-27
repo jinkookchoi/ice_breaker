@@ -41,11 +41,43 @@
 #     res = search.run(f"{name}")
 #     return res
 
+from typing import Union
 from langchain_community.tools.tavily_search import TavilySearchResults
+from loguru import logger
+import urllib.parse
 
 
-def get_profile_url_tavily(name: str):
+# Note. Travily AI api key
+# https://app.tavily.com/home
+def get_profile_url_tavily(name: str) -> Union[str, None]:
     """Searches for Linkedin or twitter Profile Page."""
-    search = TavilySearchResults()
-    res = search.run(f"{name}")
-    return res[0]["url"]
+    logger.info(name)
+    search = TavilySearchResults(max_results=5)
+    res = search.run(f"{urllib.parse.quote(name)}")
+    logger.debug(res)
+
+    for r in res:
+        logger.debug(r.get("url"))
+
+    # Note. old code
+    # url: Union[str, None] = res[0].get("url", None) if res else None
+    # return url
+
+    # Match linkedin.com/in URL
+    _include: str='linkedin.com/in'
+    for r in res:
+        url: Union[str, None] = r.get("url", None)
+        logger.debug(f"Found URL: {url}")
+        if url is not None and _include in url:
+            logger.debug(f"Matched URL: {url}")
+            return url
+    
+    logger.debug(f"No matching URL found for inclusion: {_include}")
+
+    return None
+
+if __name__ == "__main__":
+    from dotenv import load_dotenv
+    load_dotenv()
+    url = get_profile_url_tavily("jinkook choi")
+    logger.debug(url)

@@ -169,6 +169,14 @@ marshmallow = ">=3.18.0,<4.0.0"
 typing-inspect = ">=0.4.0,<1"
 
 [[package]]
+name = "debugpy"
+version = "1.8.2"
+description = "An implementation of the Debug Adapter Protocol for Python"
+category = "dev"
+optional = false
+python-versions = ">=3.8"
+
+[[package]]
 name = "dill"
 version = "0.3.8"
 description = "serialize all of Python"
@@ -423,6 +431,18 @@ PyYAML = ">=5.3"
 tenacity = ">=8.1.0,<8.4.0 || >8.4.0,<9.0.0"
 
 [[package]]
+name = "langchain-ollama"
+version = "0.1.0"
+description = "An integration package connecting Ollama and LangChain"
+category = "main"
+optional = false
+python-versions = "<4.0,>=3.8.1"
+
+[package.dependencies]
+langchain-core = ">=0.2.20,<0.3.0"
+ollama = ">=0.3.0,<1"
+
+[[package]]
 name = "langchain-openai"
 version = "0.1.17"
 description = "An integration package connecting OpenAI and LangChain"
@@ -474,6 +494,21 @@ pydantic = [
     {version = ">=2.7.4,<3.0.0", markers = "python_full_version >= \"3.12.4\""},
 ]
 requests = ">=2,<3"
+
+[[package]]
+name = "loguru"
+version = "0.7.2"
+description = "Python logging made (stupidly) simple"
+category = "main"
+optional = false
+python-versions = ">=3.5"
+
+[package.dependencies]
+colorama = {version = ">=0.3.4", markers = "sys_platform == \"win32\""}
+win32-setctime = {version = ">=1.0.0", markers = "sys_platform == \"win32\""}
+
+[package.extras]
+dev = ["mypy (==v0.910)", "tox (==3.27.1)", "pytest (==6.1.2)", "pytest-cov (==2.12.1)", "colorama (==0.4.5)", "freezegun (==1.1.0)", "mypy (==v0.971)", "pytest-mypy-plugins (==1.9.3)", "exceptiongroup (==1.1.3)", "mypy (==v1.4.1)", "pre-commit (==3.4.0)", "tox (==4.11.0)", "pytest (==7.4.0)", "pytest-cov (==4.1.0)", "pytest-mypy-plugins (==3.0.0)", "colorama (==0.4.6)", "freezegun (==1.2.2)", "mypy (==v1.5.1)", "Sphinx (==7.2.5)", "sphinx-autobuild (==2021.3.14)", "sphinx-rtd-theme (==1.3.0)"]
 
 [[package]]
 name = "markupsafe"
@@ -562,6 +597,17 @@ python-versions = ">=3.6"
 rsa = ["cryptography (>=3.0.0)"]
 signals = ["blinker (>=1.4.0)"]
 signedtoken = ["cryptography (>=3.0.0)", "pyjwt (>=2.0.0,<3)"]
+
+[[package]]
+name = "ollama"
+version = "0.3.0"
+description = "The official Python client for Ollama."
+category = "main"
+optional = false
+python-versions = "<4.0,>=3.8"
+
+[package.dependencies]
+httpx = ">=0.27.0,<0.28.0"
 
 [[package]]
 name = "openai"
@@ -921,6 +967,17 @@ MarkupSafe = ">=2.1.1"
 watchdog = ["watchdog (>=2.3)"]
 
 [[package]]
+name = "win32-setctime"
+version = "1.1.0"
+description = "A small Python utility to set file creation time on Windows"
+category = "main"
+optional = false
+python-versions = ">=3.5"
+
+[package.extras]
+dev = ["pytest (>=4.6.2)", "black (>=19.3b0)"]
+
+[[package]]
 name = "yarl"
 version = "1.9.4"
 description = "Yet another URL library"
@@ -935,7 +992,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "4389dcb3b42eeced5e12fa6dd1aa6218bed0f13e9410d7c7c08b5ca7353af22d"
+content-hash = "15c5740734b1d8c6a835469ecf4c015644777f2105010a3ca6cd0bf035a11c54"
 
 [metadata.files]
 aiohttp = []
@@ -952,6 +1009,7 @@ charset-normalizer = []
 click = []
 colorama = []
 dataclasses-json = []
+debugpy = []
 dill = []
 distro = []
 exceptiongroup = []
@@ -971,10 +1029,12 @@ jsonpointer = []
 langchain = []
 langchain-community = []
 langchain-core = []
+langchain-ollama = []
 langchain-openai = []
 langchain-text-splitters = []
 langchainhub = []
 langsmith = []
+loguru = []
 markupsafe = []
 marshmallow = []
 mccabe = []
@@ -983,6 +1043,7 @@ mypy = []
 mypy-extensions = []
 numpy = []
 oauthlib = []
+ollama = []
 openai = []
 orjson = []
 packaging = []
@@ -1009,4 +1070,5 @@ typing-extensions = []
 typing-inspect = []
 urllib3 = []
 werkzeug = []
+win32-setctime = []
 yarl = []
