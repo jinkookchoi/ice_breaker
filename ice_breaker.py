@@ -64,13 +64,15 @@ from langchain_openai import ChatOpenAI
 # from langchain_ollama import ChatOllama
 from langchain_core.output_parsers import StrOutputParser
 
+from agents.twitter_lookup_agent import lookup as twitter_lookup_agent
 from third_parties.linkedin import scrape_linkedin_profile
+from third_parties.twitter import scrape_user_tweets_mock
 
 from agents.linkedin_lookup_agent import lookup as linkedin_lookup_agent
 
 def ice_break_with(name: str) -> str:
     linkedin_username = linkedin_lookup_agent(name=name)
-    logger.debug(linkedin_username)
+    linkedin_data = scrape_linkedin_profile(linkedin_profile_url=linkedin_username, mock=False)
 
     # Note. Proxycurl credits required!!!
     # linkedin_data = scrape_linkedin_profile(linkedin_profile_url="https://www.linkedin.com/in/jinkookchoi/", mock=False)
@@ -78,7 +80,8 @@ def ice_break_with(name: str) -> str:
     # linkedin_data = scrape_linkedin_profile(linkedin_profile_url="https://www.linkedin.com/in/jinkookchoi/", mock=True)
     # linkedin_data = scrape_linkedin_profile(linkedin_profile_url=linkedin_username, mock=True)
 
-    linkedin_data = scrape_linkedin_profile(linkedin_profile_url=linkedin_username, mock=False)
+    twitter_username = twitter_lookup_agent(name=name)
+    tweets = scrape_user_tweets_mock(username=twitter_username)
 
     # mock_information = """
     #     Elon Reeve Musk FRS (/ˈiːlɒn/; born June 28, 1971) is a businessman and investor known for his key roles in space company SpaceX and automotive company Tesla, Inc. Other involvements include ownership of X Corp., the company that operates the social media platform X (formerly known as Twitter), and his role in the founding of The Boring Company, xAI, Neuralink and OpenAI. He is one of the wealthiest people in the world; as of July 2024, Forbes estimates his net worth to be US$221 billion.[4]
@@ -88,13 +91,16 @@ def ice_break_with(name: str) -> str:
     # """
 
     summary_template = """
-        given the linkedin information {information} about a person I want you to create:
+        given the linkedin information {information},
+        and their latest twitter posts {twitter_posts} I want you to create:
         1. A short summary
         2. two interesting facts about them
+
+        Use both information from twitter and linkedin
     """
 
     summary_prompt_template = PromptTemplate(
-        input_variables=["information"], 
+        input_variables=["information", "twitter_posts"], 
         template=summary_template
     )
 
@@ -113,14 +119,15 @@ def ice_break_with(name: str) -> str:
     # res = chain.invoke(input={"information": mock_information})
 
     # Using linkedin data
-    res: str = chain.invoke(input={"information": linkedin_data})
-    logger.info(res)
+    res: str = chain.invoke(input={"information": linkedin_data, "twitter_posts": tweets})
+    logger.success(res)
     return res
 
 
 if __name__ == "__main__":
     load_dotenv()
-    ice_break_with(name="Eden Marco")
+    # ice_break_with(name="Eden Marco Udemy")
+    ice_break_with(name="Harrison Chase")
     # ice_break_with(name="Soojung Shin")
     # ice_break_with("Bill Gates")
     # ice_break_with("Jinkook Choi")

@@ -62,7 +62,8 @@ def lookup(name: str) -> str:
     tools_for_agent = [
         Tool(
             name="Crawl Google 4 linkedin profile page",
-            func=get_profile_url_tavily,
+            # func=get_profile_url_tavily,
+            func=lambda name: get_profile_url_tavily(name, include='linkedin.com/in'),
             description="useful for when you need get the Linkedin Page URL.",
         )
     ]
@@ -90,6 +91,6 @@ def lookup(name: str) -> str:
 if __name__ == "__main__":
     lookup(name="Jinkook Choi")
     lookup(name="Eden Marco")
-    lookup(name="Soojung Shin")
-    lookup("Bill Gates")
-    lookup("Jinkook Choi")
+    # lookup(name="Soojung Shin")
+    # lookup("Bill Gates")
+    # lookup("Jinkook Choi")

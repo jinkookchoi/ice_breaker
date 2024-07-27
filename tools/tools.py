@@ -49,9 +49,10 @@ import urllib.parse
 
 # Note. Travily AI api key
 # https://app.tavily.com/home
-def get_profile_url_tavily(name: str) -> Union[str, None]:
+def get_profile_url_tavily(name: str, include: Union[str, None]) -> Union[str, None]:
     """Searches for Linkedin or twitter Profile Page."""
     logger.info(name)
+    logger.info(include)
     search = TavilySearchResults(max_results=5)
     res = search.run(f"{urllib.parse.quote(name)}")
     logger.debug(res)
@@ -59,22 +60,23 @@ def get_profile_url_tavily(name: str) -> Union[str, None]:
     for r in res:
         logger.debug(r.get("url"))
 
+    url: Union[str, None] = None
     # Note. old code
-    # url: Union[str, None] = res[0].get("url", None) if res else None
-    # return url
+    url = res[0].get("url", None) if res else None
+    if include is None:
+        return url
 
     # Match linkedin.com/in URL
-    _include: str='linkedin.com/in'
+    # _include: str='linkedin.com/in'
     for r in res:
-        url: Union[str, None] = r.get("url", None)
-        logger.debug(f"Found URL: {url}")
-        if url is not None and _include in url:
-            logger.debug(f"Matched URL: {url}")
-            return url
-    
-    logger.debug(f"No matching URL found for inclusion: {_include}")
+        _url: Union[str, None] = r.get("url", None)
+        logger.debug(f"Found URL: {_url}")
+        if _url is not None and include in _url:
+            logger.debug(f"Matched URL: {_url}")
+            return _url
 
-    return None
+    logger.debug(url)
+    return url
 
 if __name__ == "__main__":
     from dotenv import load_dotenv

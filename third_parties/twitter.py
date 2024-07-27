@@ -1,7 +1,9 @@
 import os
+from typing import Any, List
 from dotenv import load_dotenv
 import tweepy
-import requests
+import requests # type: ignore
+from loguru import logger
 
 load_dotenv()
 
@@ -15,7 +17,7 @@ twitter_client = tweepy.Client(
 )
 
 
-def scrape_user_tweets(username, num_tweets=5):
+def scrape_user_tweets(username: str, num_tweets: int = 5) -> List[Any]:
     """
     Scrapes a Twitter user's original tweets (i.e., not retweets or replies) and returns them as a list of dictionaries.
     Each dictionary has three fields: "time_posted" (relative to now), "text", and "url".
@@ -35,7 +37,7 @@ def scrape_user_tweets(username, num_tweets=5):
     return tweet_list
 
 
-def scrape_user_tweets_mock(username="EdenEmarco177", num_tweets=5):
+def scrape_user_tweets_mock(username: str = "EdenEmarco177", num_tweets: int = 5) -> List[Any]:
     """
     Scrapes pre made Edens's Github Gist file of tweets and returns them as a list of dictionaries.
     Each dictionary has three fields: "time_posted" (relative to now), "text", and "url".
@@ -52,10 +54,9 @@ def scrape_user_tweets_mock(username="EdenEmarco177", num_tweets=5):
         tweet_dict["url"] = f"https://twitter.com/{username}/status/{tweet['id']}"
         tweet_list.append(tweet_dict)
 
+    logger.debug(tweet_list)
     return tweet_list
 
 
 if __name__ == "__main__":
-
-    tweets = scrape_user_tweets_mock(username="EdenEmarco177")
-    print(tweets)
+    scrape_user_tweets_mock(username="EdenEmarco177")
