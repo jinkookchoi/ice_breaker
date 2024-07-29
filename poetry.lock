@@ -456,6 +456,23 @@ openai = ">=1.32.0,<2.0.0"
 tiktoken = ">=0.7,<1"
 
 [[package]]
+name = "langchain-pinecone"
+version = "0.1.3"
+description = "An integration package connecting Pinecone and LangChain"
+category = "main"
+optional = false
+python-versions = "<3.13,>=3.8.1"
+
+[package.dependencies]
+aiohttp = ">=3.9.5,<4.0.0"
+langchain-core = ">=0.1.52,<0.3"
+numpy = [
+    {version = ">=1,<2", markers = "python_version < \"3.12\""},
+    {version = ">=1.26.0,<2.0.0", markers = "python_version >= \"3.12\""},
+]
+pinecone-client = ">=5.0.0,<6.0.0"
+
+[[package]]
 name = "langchain-text-splitters"
 version = "0.2.2"
 description = "LangChain text splitting utilities"
@@ -654,6 +671,48 @@ optional = false
 python-versions = ">=3.8"
 
 [[package]]
+name = "pinecone-client"
+version = "5.0.0"
+description = "Pinecone client and SDK"
+category = "main"
+optional = false
+python-versions = "<4.0,>=3.8"
+
+[package.dependencies]
+certifi = ">=2019.11.17"
+pinecone-plugin-inference = "1.0.2"
+pinecone-plugin-interface = ">=0.0.7,<0.0.8"
+tqdm = ">=4.64.1"
+typing-extensions = ">=3.7.4"
+urllib3 = [
+    {version = ">=1.26.0", markers = "python_version >= \"3.8\" and python_version < \"3.12\""},
+    {version = ">=1.26.5", markers = "python_version >= \"3.12\" and python_version < \"4.0\""},
+]
+
+[package.extras]
+grpc = ["grpcio (>=1.44.0)", "grpcio (>=1.59.0)", "googleapis-common-protos (>=1.53.0)", "lz4 (>=3.1.3)", "protobuf (>=4.25,<5.0)", "protoc-gen-openapiv2 (>=0.0.1,<0.0.2)"]
+
+[[package]]
+name = "pinecone-plugin-inference"
+version = "1.0.2"
+description = "Embeddings plugin for Pinecone SDK"
+category = "main"
+optional = false
+python-versions = "<4.0,>=3.8"
+
+[package.dependencies]
+pinecone-client = ">=4.1.1,<6.0.0"
+pinecone-plugin-interface = ">=0.0.7,<0.0.8"
+
+[[package]]
+name = "pinecone-plugin-interface"
+version = "0.0.7"
+description = "Plugin interface for the Pinecone python client"
+category = "main"
+optional = false
+python-versions = "<4.0,>=3.8"
+
+[[package]]
 name = "platformdirs"
 version = "4.2.2"
 description = "A small Python package for determining appropriate platform-specific dirs, e.g. a `user data dir`."
@@ -677,10 +736,7 @@ python-versions = ">=3.8"
 [package.dependencies]
 annotated-types = ">=0.4.0"
 pydantic-core = "2.20.1"
-typing-extensions = [
-    {version = ">=4.12.2", markers = "python_version >= \"3.13\""},
-    {version = ">=4.6.1", markers = "python_version < \"3.13\""},
-]
+typing-extensions = {version = ">=4.6.1", markers = "python_version < \"3.13\""}
 
 [package.extras]
 email = ["email-validator (>=2.0.0)"]
@@ -991,8 +1047,8 @@ multidict = ">=4.0"
 
 [metadata]
 lock-version = "1.1"
-python-versions = "^3.10"
-content-hash = "f7fcfb7717eb61ead6704c3ea75cd4fe08a0413cd6e59df62100303dc401d625"
+python-versions = ">=3.10,<3.13"
+content-hash = "fadd6a5ca863b4be655abeaaec3933af58d7746fab8e745f112bb4653a73fa70"
 
 [metadata.files]
 aiohttp = []
@@ -1031,6 +1087,7 @@ langchain-community = []
 langchain-core = []
 langchain-ollama = []
 langchain-openai = []
+langchain-pinecone = []
 langchain-text-splitters = []
 langchainhub = []
 langsmith = []
@@ -1048,6 +1105,9 @@ openai = []
 orjson = []
 packaging = []
 pathspec = []
+pinecone-client = []
+pinecone-plugin-inference = []
+pinecone-plugin-interface = []
 platformdirs = []
 pydantic = []
 pydantic-core = []

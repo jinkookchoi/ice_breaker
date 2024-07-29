@@ -93,7 +93,7 @@ def ice_break_with(name: str) -> Tuple[Summary, TopicOfInterest, IceBreaker, str
         summary_and_facts,
         interests,
         ice_breakers,
-        linkedin_data.get("profile_pic_url", "")
+        linkedin_data.get("profile_pic_url", ""),
     )
     logger.success(result)
     return result

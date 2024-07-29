@@ -1,8 +1,8 @@
-from typing import Dict, Any, List
-from loguru import logger
+from typing import Any, Dict, List
 
 from langchain.callbacks.base import BaseCallbackHandler
 from langchain.schema import LLMResult
+from loguru import logger
 
 
 class AgentCallbackHandler(BaseCallbackHandler):
