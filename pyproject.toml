@@ -29,6 +29,7 @@ isort = "^5.13.2"
 mypy = "^1.11.0"
 debugpy = "^1.8.2"
 black = "^24.4.2"
+typing-extensions = "^4.12.2"
 
 [tool.mypy]
 # --strict
