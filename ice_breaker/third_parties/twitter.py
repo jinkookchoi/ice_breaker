@@ -1,8 +1,9 @@
 import os
 from typing import Any, List
-from dotenv import load_dotenv
+
+import requests  # type: ignore
 import tweepy
-import requests # type: ignore
+from dotenv import load_dotenv
 from loguru import logger
 
 load_dotenv()
@@ -37,7 +38,9 @@ def scrape_user_tweets(username: str, num_tweets: int = 5) -> List[Any]:
     return tweet_list
 
 
-def scrape_user_tweets_mock(username: str = "EdenEmarco177", num_tweets: int = 5) -> List[Any]:
+def scrape_user_tweets_mock(
+    username: str = "EdenEmarco177", num_tweets: int = 5
+) -> List[Any]:
     """
     Scrapes pre made Edens's Github Gist file of tweets and returns them as a list of dictionaries.
     Each dictionary has three fields: "time_posted" (relative to now), "text", and "url".

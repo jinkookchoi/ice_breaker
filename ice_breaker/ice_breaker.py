@@ -1,56 +1,3 @@
-# from typing import Tuple
-
-# from langchain.prompts.prompt import PromptTemplate
-# from agents.linkedin_lookup_agent import lookup as linkedin_lookup_agent
-# from agents.twitter_lookup_agent import lookup as twitter_lookup_agent
-# from chains.custom_chains import (
-#     get_summary_chain,
-#     get_interests_chain,
-#     get_ice_breaker_chain,
-# )
-# from third_parties.linkedin import scrape_linkedin_profile
-# from third_parties.twitter import scrape_user_tweets, scrape_user_tweets_mock
-# from output_parsers import (
-#     Summary,
-#     IceBreaker,
-#     TopicOfInterest,
-# )
-
-
-# def ice_break_with(
-# name: str,
-# ) -> Tuple[Summary, TopicOfInterest, IceBreaker, str]:
-# linkedin_username = linkedin_lookup_agent(name=name)
-# linkedin_data = scrape_linkedin_profile(linkedin_profile_url=linkedin_username)
-#
-# twitter_username = twitter_lookup_agent(name=name)
-# tweets = scrape_user_tweets(username=twitter_username)
-
-# summary_chain = get_summary_chain()
-# summary_and_facts: Summary = summary_chain.invoke(
-#     input={"information": linkedin_data, "twitter_posts": tweets},
-# )
-#
-# interests_chain = get_interests_chain()
-# interests: TopicOfInterest = interests_chain.invoke(
-#     input={"information": linkedin_data, "twitter_posts": tweets}
-# )
-#
-# ice_breaker_chain = get_ice_breaker_chain()
-# ice_breakers: IceBreaker = ice_breaker_chain.invoke(
-#     input={"information": linkedin_data, "twitter_posts": tweets}
-# )
-#
-# return (
-#     summary_and_facts,
-#     interests,
-#     ice_breakers,
-#     linkedin_data.get("profile_pic_url"),
-# )
-# if __name__ == "__main__":
-# pass
-
-
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
 #
 # Chapter 8. Your First LangChain application - Chaining a simple promp
@@ -58,28 +5,27 @@
 #
 
 from typing import Tuple
-from loguru import logger
+
 from dotenv import load_dotenv
-from langchain_core.prompts.prompt import PromptTemplate
-from langchain_openai import ChatOpenAI
-# from langchain_ollama import ChatOllama
-# from langchain_core.output_parsers import StrOutputParser
+from loguru import logger
 
-from agents.twitter_lookup_agent import lookup as twitter_lookup_agent
-from third_parties.linkedin import scrape_linkedin_profile
-from third_parties.twitter import scrape_user_tweets_mock
-
-from agents.linkedin_lookup_agent import lookup as linkedin_lookup_agent
-from output_parsers import (
-    summary_parser,
-    Summary,
-    # IceBreaker,
-    # TopicOfInterest,
+from ice_breaker.agents.linkedin_lookup_agent import lookup as linkedin_lookup_agent
+from ice_breaker.agents.twitter_lookup_agent import lookup as twitter_lookup_agent
+from ice_breaker.chains.custom_chains import (
+    get_ice_breaker_chain,
+    get_interests_chain,
+    get_summary_chain,
 )
+from ice_breaker.output_parsers import IceBreaker, Summary, TopicOfInterest
+from ice_breaker.third_parties.linkedin import scrape_linkedin_profile
+from ice_breaker.third_parties.twitter import scrape_user_tweets_mock
 
-def ice_break_with(name: str) -> Tuple[Summary, str]:
+
+def ice_break_with(name: str) -> Tuple[Summary, TopicOfInterest, IceBreaker, str]:
     linkedin_username = linkedin_lookup_agent(name=name)
-    linkedin_data = scrape_linkedin_profile(linkedin_profile_url=linkedin_username, mock=False)
+    linkedin_data = scrape_linkedin_profile(
+        linkedin_profile_url=linkedin_username, mock=False
+    )
 
     # Note. Proxycurl credits required!!!
     # linkedin_data = scrape_linkedin_profile(linkedin_profile_url="https://www.linkedin.com/in/jinkookchoi/", mock=False)
@@ -97,21 +43,21 @@ def ice_break_with(name: str) -> Tuple[Summary, str]:
     #     Musk has expressed views that have made him a polarizing figure.[5] He has been criticized for making unscientific and misleading statements, including COVID-19 misinformation, promoting right-wing conspiracy theories, and "endorsing an antisemitic theory",[6] the latter of which he later apologized for.[5][7] His ownership of Twitter has been similarly controversial, being marked by layoffs of large numbers of employees, an increase in hate speech, misinformation and disinformation posts on the website, and changes to Twitter Blue verification, but also receiving some praise for bolstering free speech.
     # """
 
-    summary_template = """
-    given the linkedin information {information},
-    and their latest twitter posts {twitter_posts} I want you to create:
-    1. A short summary
-    2. two interesting facts about them
-
-    Use both information from twitter and linkedin
-    \n{format_instructions}
-    """
-
-    summary_prompt_template = PromptTemplate(
-        input_variables=["information", "twitter_posts"], 
-        template=summary_template,
-        partial_variables={"format_instructions": summary_parser.get_format_instructions()}
-    )
+    # summary_template = """
+    # given the linkedin information {information},
+    # and their latest twitter posts {twitter_posts} I want you to create:
+    # 1. A short summary
+    # 2. two interesting facts about them
+    #
+    # Use both information from twitter and linkedin
+    # \n{format_instructions}
+    # """
+    #
+    # summary_prompt_template = PromptTemplate(
+    #     input_variables=["information", "twitter_posts"],
+    #     template=summary_template,
+    #     partial_variables={"format_instructions": summary_parser.get_format_instructions()}
+    # )
 
     # Note. Using llama3
     # llm = ChatOllama(model="llama3")
@@ -120,18 +66,42 @@ def ice_break_with(name: str) -> Tuple[Summary, str]:
     # - command: ollama pull mistral
     # llm = ChatOllama(model="mistral")
 
-    llm = ChatOpenAI(temperature=0, model="gpt-4")
+    # llm = ChatOpenAI(temperature=0, model="gpt-4")
 
     # chain = summary_prompt_template | llm | StrOutputParser()
-    chain = summary_prompt_template | llm | summary_parser
+    # chain = summary_prompt_template | llm | summary_parser
 
     # Note. Using mock data
     # res = chain.invoke(input={"information": mock_information})
 
+    summary_chain = get_summary_chain()
+    summary_and_facts: Summary = summary_chain.invoke(
+        input={"information": linkedin_data, "twitter_posts": tweets}
+    )
+
+    interests_chain = get_interests_chain()
+    interests: TopicOfInterest = interests_chain.invoke(
+        input={"information": linkedin_data, "twitter_posts": tweets}
+    )
+
+    ice_breaker_chain = get_ice_breaker_chain()
+    ice_breakers: IceBreaker = ice_breaker_chain.invoke(
+        input={"information": linkedin_data, "twitter_posts": tweets}
+    )
+
+    result = (
+        summary_and_facts,
+        interests,
+        ice_breakers,
+        linkedin_data.get("profile_pic_url", "")
+    )
+    logger.success(result)
+    return result
+
     # Using linkedin data
-    res: Summary = chain.invoke(input={"information": linkedin_data, "twitter_posts": tweets})
-    logger.success(res)
-    return res, linkedin_data.get("profile_pic_url", "")
+    # res: Summary = chain.invoke(input={"information": linkedin_data, "twitter_posts": tweets})
+    # logger.success(res)
+    # return res, linkedin_data.get("profile_pic_url", "")
 
 
 if __name__ == "__main__":
@@ -142,5 +112,3 @@ if __name__ == "__main__":
     # ice_break_with("Bill Gates")
     # ice_break_with("Jinkook Choi")
     # ice_break_with("최진국")
-
-

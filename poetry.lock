@@ -413,7 +413,7 @@ tenacity = ">=8.1.0,<8.4.0 || >8.4.0,<9.0.0"
 
 [[package]]
 name = "langchain-core"
-version = "0.2.23"
+version = "0.2.24"
 description = "Building applications with LLMs through composability"
 category = "main"
 optional = false
@@ -444,14 +444,14 @@ ollama = ">=0.3.0,<1"
 
 [[package]]
 name = "langchain-openai"
-version = "0.1.17"
+version = "0.1.19"
 description = "An integration package connecting OpenAI and LangChain"
 category = "main"
 optional = false
 python-versions = "<4.0,>=3.8.1"
 
 [package.dependencies]
-langchain-core = ">=0.2.20,<0.3.0"
+langchain-core = ">=0.2.24,<0.3.0"
 openai = ">=1.32.0,<2.0.0"
 tiktoken = ">=0.7,<1"
 
@@ -611,7 +611,7 @@ httpx = ">=0.27.0,<0.28.0"
 
 [[package]]
 name = "openai"
-version = "1.37.0"
+version = "1.37.1"
 description = "The official Python library for the openai API"
 category = "main"
 optional = false
@@ -743,7 +743,7 @@ python-versions = ">=3.6"
 
 [[package]]
 name = "regex"
-version = "2024.5.15"
+version = "2024.7.24"
 description = "Alternative regular expression module, to replace re."
 category = "main"
 optional = false
@@ -992,7 +992,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "9f5d850a0baeabbd2f3e885eb67eee75b64080c0cca131ddb293e1977bc6377f"
+content-hash = "6db973cfab2d1f60cdc4bb73a165cc880928c7f3ace064b98347b3655e7f6b60"
 
 [metadata.files]
 aiohttp = []

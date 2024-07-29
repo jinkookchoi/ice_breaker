@@ -1,15 +1,19 @@
+from langchain.prompts.prompt import PromptTemplate
+from langchain_core.output_parsers import PydanticOutputParser
 from langchain_core.runnables import RunnableSequence
 from langchain_openai import ChatOpenAI
-from langchain.prompts.prompt import PromptTemplate
+
+from ice_breaker.output_parsers import (
+    ice_breaker_parser,
+    summary_parser,
+    topics_of_interest_parser,
+)
+
+llm = ChatOpenAI(temperature=0, model="gpt-4")
+llm_creative = ChatOpenAI(temperature=1, model="gpt-4")
 
 
-from output_parsers import summary_parser, ice_breaker_parser, topics_of_interest_parser
-
-llm = ChatOpenAI(temperature=0, model_name="gpt-3.5-turbo")
-llm_creative = ChatOpenAI(temperature=1, model_name="gpt-3.5-turbo")
-
-
-def get_summary_chain() -> RunnableSequence:
+def get_summary_chain() -> RunnableSequence:  # type: ignore
     summary_template = """
          given the information about a person from linkedin {information}, and twitter posts {twitter_posts} I want you to create:
          1. a short summary
@@ -25,7 +29,11 @@ def get_summary_chain() -> RunnableSequence:
         },
     )
 
-    return summary_prompt_template | llm | summary_parser
+    # return summary_prompt_template | llm | summary_parser
+    chain = RunnableSequence(  # type: ignore
+        summary_prompt_template, llm, summary_parser
+    )
+    return chain
 
 
 def get_interests_chain() -> RunnableSequence:
@@ -43,7 +51,11 @@ def get_interests_chain() -> RunnableSequence:
         },
     )
 
-    return interesting_facts_prompt_template | llm | topics_of_interest_parser
+    # return interesting_facts_prompt_template | llm | topics_of_interest_parser
+    chain = RunnableSequence(
+        interesting_facts_prompt_template, llm, topics_of_interest_parser
+    )
+    return chain
 
 
 def get_ice_breaker_chain() -> RunnableSequence:
@@ -61,4 +73,6 @@ def get_ice_breaker_chain() -> RunnableSequence:
         },
     )
 
-    return ice_breaker_prompt_template | llm | ice_breaker_parser
+    # return ice_breaker_prompt_template | llm | ice_breaker_parser
+    chain = RunnableSequence(ice_breaker_prompt_template, llm, ice_breaker_parser)
+    return chain

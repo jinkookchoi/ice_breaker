@@ -41,10 +41,11 @@
 #     res = search.run(f"{name}")
 #     return res
 
+import urllib.parse
 from typing import Union
+
 from langchain_community.tools.tavily_search import TavilySearchResults
 from loguru import logger
-import urllib.parse
 
 
 # Note. Travily AI api key
@@ -77,9 +78,3 @@ def get_profile_url_tavily(name: str, include: Union[str, None]) -> Union[str, N
 
     logger.debug(url)
     return url
-
-if __name__ == "__main__":
-    from dotenv import load_dotenv
-    load_dotenv()
-    url = get_profile_url_tavily("jinkook choi")
-    logger.debug(url)

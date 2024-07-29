@@ -1,13 +1,16 @@
 import os
 from typing import Any, Dict
-import requests # type: ignore
+
+import requests  # type: ignore
 from dotenv import load_dotenv
 
 load_dotenv()
 
 
 # Chapter 13. Integrating Linkedin Data Processing - Part 1 - Scraping
-def scrape_linkedin_profile(linkedin_profile_url: str, mock: bool = True) -> Dict[str, Any]:
+def scrape_linkedin_profile(
+    linkedin_profile_url: str, mock: bool = True
+) -> Dict[str, Any]:
     """scrape information from LinkedIn profiles,
     Manually scrape the information from the LinkedIn profile"""
 

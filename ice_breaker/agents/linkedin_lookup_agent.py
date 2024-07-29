@@ -1,17 +1,15 @@
 import os
-from loguru import logger
 
+from dotenv import load_dotenv
 from langchain import hub
-from langchain.agents import (
-    create_react_agent,
-    AgentExecutor,
-)
+from langchain.agents import AgentExecutor, create_react_agent
+from langchain.prompts.prompt import PromptTemplate
 from langchain_core.tools import Tool
 from langchain_openai import ChatOpenAI
-from langchain.prompts.prompt import PromptTemplate
-from dotenv import load_dotenv
-from tools.tools import get_profile_url_tavily
+from loguru import logger
 from pydantic.v1.types import SecretStr
+
+from ice_breaker.tools.tools import get_profile_url_tavily
 
 load_dotenv()
 
@@ -41,11 +39,11 @@ load_dotenv()
 # Thought:{agent_scratchpad}
 # ------
 
+
 def lookup(name: str) -> str:
     logger.info(name)
     llm = ChatOpenAI(
         temperature=0,
-        # name="gpt-3.5-turbo",
         name="gpt-4",
         api_key=SecretStr(os.environ["OPENAI_API_KEY"]),
     )
@@ -53,7 +51,6 @@ def lookup(name: str) -> str:
                     Your answer should contain only a URL.
                     The URL does not contain 'pub' or 'dir' word.
                     The URL contains 'linkedin.com/in'"""
-
 
     prompt_template = PromptTemplate(
         template=template, input_variables=["name_of_person"]
@@ -63,11 +60,10 @@ def lookup(name: str) -> str:
         Tool(
             name="Crawl Google 4 linkedin profile page",
             # func=get_profile_url_tavily,
-            func=lambda name: get_profile_url_tavily(name, include='linkedin.com/in'),
+            func=lambda name: get_profile_url_tavily(name, include="linkedin.com/in"),
             description="useful for when you need get the Linkedin Page URL.",
         )
     ]
-
 
     # Note. lanchain ReAct
     # https://python.langchain.com/v0.1/docs/modules/agents/agent_types/react/
@@ -77,20 +73,22 @@ def lookup(name: str) -> str:
 
     react_prompt = hub.pull("hwchase17/react")
     agent = create_react_agent(llm=llm, tools=tools_for_agent, prompt=react_prompt)
-    agent_executor = AgentExecutor(agent=agent, tools=tools_for_agent, verbose=True) # pyright: ignore
+    agent_executor = AgentExecutor(
+        agent=agent, tools=tools_for_agent, verbose=True
+    )  # pyright: ignore
 
-    logger.info("Invoke start ....")
     result = agent_executor.invoke(
         input={"input": prompt_template.format_prompt(name_of_person=name)}
     )
     linked_profile_url: str = result["output"]
     logger.info(linked_profile_url)
     return linked_profile_url
-    
+
 
 if __name__ == "__main__":
-    lookup(name="Jinkook Choi")
-    lookup(name="Eden Marco")
+    # lookup(name="Jinkook Choi")
+    # lookup(name="Eden Marco")
     # lookup(name="Soojung Shin")
     # lookup("Bill Gates")
     # lookup("Jinkook Choi")
+    pass
