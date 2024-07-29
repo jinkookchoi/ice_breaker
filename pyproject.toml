@@ -34,6 +34,7 @@ typing-extensions = "^4.12.2"
 
 [tool.mypy]
 # --strict
+packages = ["ice_breaker", "rag", "react"]
 disallow_any_generics = true
 disallow_subclassing_any = false
 disallow_untyped_calls = true
