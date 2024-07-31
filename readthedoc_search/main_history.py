@@ -1,4 +1,5 @@
 from typing import Set
+from loguru import logger
 
 import streamlit as st
 from streamlit_chat import message
@@ -33,6 +34,13 @@ def create_sources_string(source_urls: Set[str]) -> str:
 
 if prompt:
     with st.spinner("Generating response.."):
+        logger.info(
+            f'user prompt history len={len(st.session_state["user_prompt_history"])}'
+        )
+        logger.info(
+            f'chat answers history len={len(st.session_state["chat_answers_history"])}'
+        )
+        logger.info(prompt)
         generated_response = run_llm(
             query=prompt, chat_history=st.session_state["chat_history"]
         )
@@ -41,6 +49,7 @@ if prompt:
         formatted_response = (
             f"{generated_response['answer']} \n\n {create_sources_string(sources)}"
         )
+        logger.info(generated_response["answer"])
 
         st.session_state["user_prompt_history"].append(prompt)
         st.session_state["chat_answers_history"].append(formatted_response)
