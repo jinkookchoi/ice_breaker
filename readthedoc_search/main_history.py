@@ -1,7 +1,7 @@
 from typing import Set
-from loguru import logger
 
 import streamlit as st
+from loguru import logger
 from streamlit_chat import message
 
 from readthedoc_search.backend.core_history import run_llm

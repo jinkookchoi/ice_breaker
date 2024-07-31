@@ -691,6 +691,18 @@ PyYAML = ">=5.3"
 tenacity = ">=8.1.0,<8.4.0 || >8.4.0,<9.0.0"
 
 [[package]]
+name = "langchain-experimental"
+version = "0.0.63"
+description = "Building applications with LLMs through composability"
+category = "main"
+optional = false
+python-versions = "<4.0,>=3.8.1"
+
+[package.dependencies]
+langchain-community = ">=0.2.6,<0.3.0"
+langchain-core = ">=0.2.10,<0.3.0"
+
+[[package]]
 name = "langchain-ollama"
 version = "0.1.0"
 description = "An integration package connecting Ollama and LangChain"
@@ -1272,6 +1284,14 @@ full = ["cryptography", "pycryptodome", "Pillow (>=8.0.0)"]
 image = ["Pillow (>=8.0.0)"]
 
 [[package]]
+name = "pypng"
+version = "0.20220715.0"
+description = "Pure Python library for saving and loading PNG images"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "python-dateutil"
 version = "2.9.0.post0"
 description = "Extensions to the standard Python datetime module"
@@ -1338,6 +1358,26 @@ description = "YAML parser and emitter for Python"
 category = "main"
 optional = false
 python-versions = ">=3.6"
+
+[[package]]
+name = "qrcode"
+version = "7.4.2"
+description = "QR Code image generator"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+colorama = {version = "*", markers = "platform_system == \"Windows\""}
+pypng = "*"
+typing-extensions = "*"
+
+[package.extras]
+all = ["zest.releaser", "tox", "pytest", "pytest-cov", "pillow (>=9.1.0)"]
+dev = ["tox", "pytest", "pytest-cov"]
+maintainer = ["zest.releaser"]
+pil = ["pillow (>=9.1.0)"]
+test = ["coverage", "pytest"]
 
 [[package]]
 name = "rapidfuzz"
@@ -1994,7 +2034,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.10,<3.13"
-content-hash = "15cefff4bf769252cc8eaa94fa43df0cc5ab90786733e9aeda2d6b14717527f1"
+content-hash = "40bd1a46f90123cd0cbf63a91de726c0d90b3c4056b3cf0582d83b07502ab7e8"
 
 [metadata.files]
 aiohttp = []
@@ -2051,6 +2091,7 @@ jsonschema-specifications = []
 langchain = []
 langchain-community = []
 langchain-core = []
+langchain-experimental = []
 langchain-ollama = []
 langchain-openai = []
 langchain-pinecone = []
@@ -2093,6 +2134,7 @@ pydeck = []
 pygments = []
 pylint = []
 pypdf = []
+pypng = []
 python-dateutil = []
 python-dotenv = []
 python-iso639 = []
@@ -2100,6 +2142,7 @@ python-magic = []
 python-multipart = []
 pytz = []
 pyyaml = []
+qrcode = []
 rapidfuzz = []
 referencing = []
 regex = []
