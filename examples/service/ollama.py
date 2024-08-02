@@ -24,6 +24,6 @@ if __name__ == "__main__":
 
     async def main():
         async for chunk in langchain_stream():
-            print(chunk, end='|')
+            print(chunk, end="|")
 
     asyncio.run(main())

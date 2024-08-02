@@ -450,6 +450,20 @@ python-versions = ">=3.5"
 requests = "*"
 
 [[package]]
+name = "grandalf"
+version = "0.8"
+description = "Graph and drawing algorithms framework"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+pyparsing = "*"
+
+[package.extras]
+full = ["numpy", "ply"]
+
+[[package]]
 name = "greenlet"
 version = "3.0.3"
 description = "Lightweight in-process concurrent programming"
@@ -778,6 +792,17 @@ python-versions = "*"
 
 [package.dependencies]
 six = "*"
+
+[[package]]
+name = "langgraph"
+version = "0.1.19"
+description = "Building stateful, multi-actor applications with LLMs"
+category = "main"
+optional = false
+python-versions = "<4.0,>=3.9.0"
+
+[package.dependencies]
+langchain-core = ">=0.2.22,<0.3"
 
 [[package]]
 name = "langsmith"
@@ -1264,6 +1289,17 @@ tomlkit = ">=0.10.1"
 [package.extras]
 spelling = ["pyenchant (>=3.2,<4.0)"]
 testutils = ["gitpython (>3)"]
+
+[[package]]
+name = "pyparsing"
+version = "3.1.2"
+description = "pyparsing module - Classes and methods to define and execute parsing grammars"
+category = "main"
+optional = false
+python-versions = ">=3.6.8"
+
+[package.extras]
+diagrams = ["railroad-diagrams", "jinja2"]
 
 [[package]]
 name = "pypdf"
@@ -2034,7 +2070,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.10,<3.13"
-content-hash = "40bd1a46f90123cd0cbf63a91de726c0d90b3c4056b3cf0582d83b07502ab7e8"
+content-hash = "6f66ae6183399ac932909c8d7eab58df948f6ff32cd7ba8f8ba953f5ecccf9ff"
 
 [metadata.files]
 aiohttp = []
@@ -2073,6 +2109,7 @@ frozenlist = []
 gitdb = []
 gitpython = []
 google-search-results = []
+grandalf = []
 greenlet = []
 h11 = []
 httpcore = []
@@ -2098,6 +2135,7 @@ langchain-pinecone = []
 langchain-text-splitters = []
 langchainhub = []
 langdetect = []
+langgraph = []
 langsmith = []
 loguru = []
 lxml = []
@@ -2133,6 +2171,7 @@ pydantic-core = []
 pydeck = []
 pygments = []
 pylint = []
+pyparsing = []
 pypdf = []
 pypng = []
 python-dateutil = []
