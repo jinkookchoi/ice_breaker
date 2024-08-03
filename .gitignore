@@ -131,3 +131,4 @@ dmypy.json
 .DS_Store
 faiss_index_react/
 docs/
+.idea/
