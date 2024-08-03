@@ -1,4 +1,4 @@
-from typing import List, Sequence
+from typing import Any, List, Sequence
 
 from dotenv import load_dotenv
 
@@ -13,7 +13,7 @@ REFLECT = "reflect"
 GENERATE = "generate"
 
 
-def generation_node(state: Sequence[BaseMessage]):
+def generation_node(state: Sequence[BaseMessage]) -> BaseMessage:
     return generate_chain.invoke({"messages": state})
 
 
@@ -28,7 +28,7 @@ builder.add_node(REFLECT, reflection_node)
 builder.set_entry_point(GENERATE)
 
 
-def should_continue(state: List[BaseMessage]):
+def should_continue(state: List[BaseMessage]) -> Any:
     if len(state) > 6:
         return END
     return REFLECT
@@ -55,3 +55,4 @@ if __name__ == "__main__":
                                   """
     )
     response = graph.invoke(inputs)
+    print(response)
