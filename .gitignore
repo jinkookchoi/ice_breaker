@@ -133,3 +133,4 @@ faiss_index_react/
 docs/
 .idea/
 .chroma/
+*.sqlite
