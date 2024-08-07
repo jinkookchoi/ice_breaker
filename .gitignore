@@ -132,3 +132,4 @@ dmypy.json
 faiss_index_react/
 docs/
 .idea/
+.chroma/

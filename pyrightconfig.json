@@ -1,1 +1,17 @@
-{ "venvPath": ".", "venv": ".venv" }
+{ 
+  "venvPath": ".", 
+  "venv": ".venv",
+  "typeCheckingMode": "strict",
+  "useLibraryCodeForTypes": true,
+  "reportMissingTypeStubs": true,
+  "reportMissingImports": true,
+  "reportUnusedImport": true,
+  "reportUnusedVariable": true,
+  "reportUninitializedInstanceVariable": true,
+  "reportPrivateImportUsage": false,
+  "reportOptionalSubscript": true,
+  "reportGeneralTypeIssues": true,
+  "pythonVersion": "3.10",
+  "useLibraryCodeForTypes": true,
+  "reportUnknownMemberType": false
+}

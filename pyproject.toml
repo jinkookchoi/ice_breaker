@@ -43,12 +43,17 @@ pandas = "^2.2.2"
 tabulate = "^0.9.0"
 langgraph = "^0.1.19"
 grandalf = "^0.8"
+langchain-chroma = "^0.1.2"
 
 [tool.poetry.dev-dependencies]
 mypy = "^1.11.0"
 debugpy = "^1.8.2"
 black = "^24.4.2"
 typing-extensions = "^4.12.2"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.2"
+mypy = "^1.11.1"
 
 [tool.mypy]
 # --strict
